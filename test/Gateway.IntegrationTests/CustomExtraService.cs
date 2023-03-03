@@ -1,10 +1,10 @@
 ﻿namespace GrpcServiceTests.Gateway.IntegrationTests;
 
-public class MockExtraService : IExtraService
+public class CustomExtraService : IExtraService
 {
     private readonly string _msg;
 
-    public MockExtraService(string msg)
+    public CustomExtraService(string msg)
     {
         _msg = msg;
     }

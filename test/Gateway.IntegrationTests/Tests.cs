@@ -23,7 +23,7 @@ public class Tests : TestBaseSetup
         {
             builder.ConfigureServices(services =>
             {
-                services.AddScoped<IExtraService>(_ => new MockExtraService(expected));
+                services.AddScoped<IExtraService>(_ => new CustomExtraService(expected));
             });
         });
 

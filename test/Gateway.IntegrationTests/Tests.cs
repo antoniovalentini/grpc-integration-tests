@@ -1,6 +1,4 @@
-using System.Reflection;
 using GrpcServiceTests.Gateway.IntegrationTests.Setup;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
@@ -20,13 +18,18 @@ public class Tests : TestBaseSetup
     public async Task SayHelloUnaryTest()
     {
         // Arrange
-        Fixture.ConfigureWebHost(_ =>
+        const string expected = "Custom Extra Service";
+        Fixture.ConfigureWebHost(builder =>
         {
-
+            builder.ConfigureServices(services =>
+            {
+                services.AddScoped<IExtraService>(_ => new MockExtraService(expected));
+            });
         });
-        const string expected = "Real Extra Service";
 
         var client = new Greeter.GreeterClient(Channel);
+
+        // testing configuration
         var config = Fixture.TestServer.Services.GetService<IConfiguration>();
         _output.WriteLine($"Version: {config?["version"]}");
 

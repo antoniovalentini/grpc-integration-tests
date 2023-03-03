@@ -6,6 +6,8 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddScoped<IExtraService, RealExtraService>();
+
         services.AddGrpc(o => o.EnableDetailedErrors = true);
         services.AddGrpcReflection();
 

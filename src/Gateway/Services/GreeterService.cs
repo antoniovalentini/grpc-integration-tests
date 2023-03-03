@@ -1,5 +1,4 @@
 using Grpc.Core;
-using GrpcServiceTests.Gateway;
 
 namespace GrpcServiceTests.Gateway.Services;
 

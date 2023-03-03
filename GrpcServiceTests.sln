@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{668C251A-D97
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7A5A0548-36B5-4D70-BEF5-6345614A3380}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway.IntegrationTests", "test\Gateway.IntegrationTests\Gateway.IntegrationTests.csproj", "{BB7B24ED-1927-401F-B0FD-3B4C5386E017}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,8 +18,13 @@ Global
 		{615C5435-3891-4E2E-B6F9-104BE95517D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{615C5435-3891-4E2E-B6F9-104BE95517D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{615C5435-3891-4E2E-B6F9-104BE95517D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7B24ED-1927-401F-B0FD-3B4C5386E017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7B24ED-1927-401F-B0FD-3B4C5386E017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7B24ED-1927-401F-B0FD-3B4C5386E017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7B24ED-1927-401F-B0FD-3B4C5386E017}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{615C5435-3891-4E2E-B6F9-104BE95517D2} = {668C251A-D977-4B21-A827-279D5372BC35}
+		{BB7B24ED-1927-401F-B0FD-3B4C5386E017} = {7A5A0548-36B5-4D70-BEF5-6345614A3380}
 	EndGlobalSection
 EndGlobal

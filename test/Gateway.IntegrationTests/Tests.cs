@@ -1,4 +1,4 @@
-using GrpcServiceTests.Gateway.Services;
+using GrpcServiceTests.Gateway.IntegrationTests.Setup;
 
 namespace GrpcServiceTests.Gateway.IntegrationTests;
 

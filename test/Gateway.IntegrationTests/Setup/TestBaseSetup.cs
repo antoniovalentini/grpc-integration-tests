@@ -1,6 +1,6 @@
 ﻿using Grpc.Net.Client;
 
-namespace GrpcServiceTests.Gateway.IntegrationTests;
+namespace GrpcServiceTests.Gateway.IntegrationTests.Setup;
 
 public class TestBaseSetup : IClassFixture<GrpcTestFixture<Startup>>, IDisposable
 {

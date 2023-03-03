@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 
-namespace GrpcServiceTests.Gateway.IntegrationTests;
+namespace GrpcServiceTests.Gateway.IntegrationTests.Setup;
 
 public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
 {
@@ -18,27 +18,26 @@ public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
 
     private void EnsureServer()
     {
-        if (_host == null)
-        {
-            var builder = new HostBuilder()
-                .ConfigureServices(services =>
-                {
-                    // services.AddSingleton<ILoggerFactory>(LoggerFactory);
-                })
-                .ConfigureWebHostDefaults(webHost =>
-                {
-                    webHost
-                        .UseTestServer()
-                        .UseStartup<TStartup>();
+        if (_host != null) return;
 
-                    _configureWebHost?.Invoke(webHost);
-                });
-            _host = builder.Start();
-            _server = _host.GetTestServer();
-            _handler = _server.CreateHandler();
-        }
+        var builder = new HostBuilder()
+            .ConfigureServices(_ =>
+            {
+                // services.AddSingleton<ILoggerFactory>(LoggerFactory);
+            })
+            .ConfigureWebHostDefaults(webHost =>
+            {
+                webHost
+                    .UseTestServer()
+                    .UseStartup<TStartup>();
+
+                _configureWebHost?.Invoke(webHost);
+            });
+
+        _host = builder.Start();
+        _server = _host.GetTestServer();
+        _handler = _server.CreateHandler();
     }
-
 
     public HttpMessageHandler Handler
     {

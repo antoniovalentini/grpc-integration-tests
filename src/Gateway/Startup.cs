@@ -20,6 +20,8 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseRouting();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapGrpcService<GreeterService>();

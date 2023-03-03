@@ -13,12 +13,12 @@ public class Tests : TestBaseSetup
     public async Task SayHelloUnaryTest()
     {
         // Arrange
-        // var client = new greet
-        //
-        // // Act
-        // var response = await client.SayHelloUnaryAsync(new HelloRequest { Name = "Joe" });
-        //
-        // // Assert
-        // Assert.Equal("Hello Joe", response.Message);
+        var client = new Greeter.GreeterClient(Channel);
+
+        // Act
+        var response = await client.SayHelloAsync(new HelloRequest { Name = "Joe" });
+
+        // Assert
+        Assert.Equal("Hello Joe", response.Message);
     }
 }

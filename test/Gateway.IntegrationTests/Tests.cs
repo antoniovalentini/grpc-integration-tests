@@ -1,6 +1,4 @@
 using GrpcServiceTests.Gateway.IntegrationTests.Setup;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 
 namespace GrpcServiceTests.Gateway.IntegrationTests;
@@ -14,29 +12,32 @@ public class Tests : TestBaseSetup
         _output = output;
     }
 
-    [Fact]
-    public async Task SayHelloUnaryTest()
+    [Theory]
+    [MemberData(nameof(TestData))]
+    public async Task LoadTest(string number)
     {
         // Arrange
-        const string expected = "Custom Extra Service";
-        Fixture.ConfigureWebHost(builder =>
-        {
-            builder.ConfigureServices(services =>
-            {
-                services.AddScoped<IExtraService>(_ => new CustomExtraService(expected));
-            });
-        });
+        var expected = $"Mock Extra Service {number}";
+        Fixture.ExtraServiceMock.Setup(x => x.Do()).Returns(expected);
 
         var client = new Greeter.GreeterClient(Channel);
-
-        // testing configuration
-        var config = Fixture.TestServer.Services.GetService<IConfiguration>();
-        _output.WriteLine($"Version: {config?["version"]}");
 
         // Act
         var response = await client.SayHelloAsync(new HelloRequest { Name = "Joe" });
 
         // Assert
+        _output.WriteLine(response.Message);
         Assert.Equal($"Hello Joe! Result: {expected}", response.Message);
+    }
+
+    public static IEnumerable<object[]> TestData
+    {
+        get
+        {
+            for (var i = 0; i < 100; i++)
+            {
+                yield return new object[] { i.ToString() };
+            }
+        }
     }
 }

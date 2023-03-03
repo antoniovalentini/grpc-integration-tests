@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Moq;
 
 namespace GrpcServiceTests.Gateway.IntegrationTests.Setup;
 
@@ -11,22 +13,15 @@ public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
     private TestServer? _server;
     private IHost? _host;
     private HttpMessageHandler? _handler;
-    private Action<IWebHostBuilder>? _configureWebHost;
 
-    public void ConfigureWebHost(Action<IWebHostBuilder> configure)
-    {
-        _configureWebHost = configure;
-    }
+    public readonly Mock<IExtraService> ExtraServiceMock = new();
 
     private void EnsureServer()
     {
         if (_host != null) return;
 
         var builder = new HostBuilder()
-            .ConfigureServices(_ =>
-            {
-                // services.AddSingleton<ILoggerFactory>(LoggerFactory);
-            })
+            .ConfigureServices(_ => { })
             .ConfigureWebHostDefaults(webHost =>
             {
                 webHost
@@ -34,7 +29,10 @@ public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
                     .UseTestServer()
                     .UseStartup<TStartup>();
 
-                _configureWebHost?.Invoke(webHost);
+                webHost.ConfigureTestServices(services =>
+                {
+                    services.AddScoped<IExtraService>(_ => ExtraServiceMock.Object);
+                });
             });
 
         _host = builder.Start();
@@ -48,15 +46,6 @@ public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
         {
             EnsureServer();
             return _handler!;
-        }
-    }
-
-    public TestServer TestServer
-    {
-        get
-        {
-            EnsureServer();
-            return _server!;
         }
     }
 

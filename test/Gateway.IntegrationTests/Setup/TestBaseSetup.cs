@@ -1,4 +1,5 @@
 ﻿using Grpc.Net.Client;
+using Moq;
 
 namespace GrpcServiceTests.Gateway.IntegrationTests.Setup;
 
@@ -17,7 +18,11 @@ public class TestBaseSetup : IClassFixture<GrpcTestFixture<Startup>>, IDisposabl
         });
     }
 
-    protected TestBaseSetup(GrpcTestFixture<Startup> fixture) { Fixture = fixture; }
+    protected TestBaseSetup(GrpcTestFixture<Startup> fixture)
+    {
+        Fixture = fixture;
+        Fixture.ExtraServiceMock.Reset();
+    }
 
     public void Dispose()
     {

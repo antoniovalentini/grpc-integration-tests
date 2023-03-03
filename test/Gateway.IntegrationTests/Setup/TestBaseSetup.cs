@@ -6,12 +6,10 @@ public class TestBaseSetup : IClassFixture<GrpcTestFixture<Startup>>, IDisposabl
 {
     private GrpcChannel? _channel;
 
-    protected GrpcTestFixture<Startup> Fixture { get; set; }
-
+    protected GrpcTestFixture<Startup> Fixture { get; }
 
     protected GrpcChannel Channel => _channel ??= CreateChannel();
-
-    protected GrpcChannel CreateChannel()
+    private GrpcChannel CreateChannel()
     {
         return GrpcChannel.ForAddress("http://localhost", new GrpcChannelOptions
         {
@@ -19,7 +17,7 @@ public class TestBaseSetup : IClassFixture<GrpcTestFixture<Startup>>, IDisposabl
         });
     }
 
-    public TestBaseSetup(GrpcTestFixture<Startup> fixture)
+    protected TestBaseSetup(GrpcTestFixture<Startup> fixture)
     {
         Fixture = fixture;
     }

@@ -48,6 +48,15 @@ public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
         }
     }
 
+    public TestServer TestServer
+    {
+        get
+        {
+            EnsureServer();
+            return _server!;
+        }
+    }
+
     public void Dispose()
     {
         _handler?.Dispose();

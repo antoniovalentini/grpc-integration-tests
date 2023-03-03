@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace GrpcServiceTests.Gateway.IntegrationTests.Setup;
@@ -28,6 +30,7 @@ public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
             .ConfigureWebHostDefaults(webHost =>
             {
                 webHost
+                    .UseConfiguration(LoadTestConfiguration())
                     .UseTestServer()
                     .UseStartup<TStartup>();
 
@@ -62,5 +65,14 @@ public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
         _handler?.Dispose();
         _host?.Dispose();
         _server?.Dispose();
+    }
+
+    private static IConfiguration LoadTestConfiguration()
+    {
+        return new ConfigurationBuilder()
+            .SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new Exception("Unable to set config base path."))
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
+            .Build();
     }
 }

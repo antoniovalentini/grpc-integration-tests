@@ -17,10 +17,7 @@ public class TestBaseSetup : IClassFixture<GrpcTestFixture<Startup>>, IDisposabl
         });
     }
 
-    protected TestBaseSetup(GrpcTestFixture<Startup> fixture)
-    {
-        Fixture = fixture;
-    }
+    protected TestBaseSetup(GrpcTestFixture<Startup> fixture) { Fixture = fixture; }
 
     public void Dispose()
     {

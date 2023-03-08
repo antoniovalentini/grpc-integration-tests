@@ -3,11 +3,11 @@ using Xunit.Abstractions;
 
 namespace GrpcServiceTests.Gateway.IntegrationTests;
 
-public class Tests : TestBaseSetup
+public class Tests6 : TestBaseSetup
 {
     private readonly ITestOutputHelper _output;
 
-    public Tests(GrpcTestFixture<Startup> fixture, ITestOutputHelper output) : base(fixture)
+    public Tests6(GrpcTestFixture<Startup> fixture, ITestOutputHelper output) : base(fixture)
     {
         _output = output;
     }
@@ -17,7 +17,7 @@ public class Tests : TestBaseSetup
     public async Task LoadTest(string number)
     {
         // Arrange
-        var expected = $"Mock Extra Service {number}";
+        var expected = $"Test5 Extra Service {number}";
         Fixture.ExtraServiceMock.Setup(x => x.Do()).Returns(expected);
 
         var client = new Greeter.GreeterClient(Channel);

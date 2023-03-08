@@ -29,10 +29,15 @@ public class GrpcTestFixture<TStartup> : IDisposable where TStartup : class
                     .UseTestServer()
                     .UseStartup<TStartup>();
 
-                webHost.ConfigureTestServices(services =>
+                webHost.ConfigureServices(services =>
                 {
                     services.AddScoped<IExtraService>(_ => ExtraServiceMock.Object);
                 });
+
+                // webHost.ConfigureTestServices(services =>
+                // {
+                //     services.AddScoped<IExtraService>(_ => ExtraServiceMock.Object);
+                // });
             });
 
         _host = builder.Start();
